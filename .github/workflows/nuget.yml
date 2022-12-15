@@ -2,9 +2,10 @@ name: creating nuget
 on:
  push:
   paths:
-  - 'Ports/utils/**'
+  - 'Ports/opengl/**'
  workflow_dispatch:
 
+# getting port in linux
 # git diff HEAD~1 --name-only | xargs dirname | sed 's/Ports[/]//'
 
 jobs:
@@ -18,15 +19,16 @@ jobs:
         
       - name: get vcpkg port name
         run: |
-          $port_name = git diff ${{github.event.before}} ${{github.event.after}} --name-only | xargs dirname | sed 's/Ports[/]//'
-          echo $port_name
+          $port_name = git diff ${{github.event.before}} ${{github.event.after}} --name-only
+          $port_name = $port_name.split("/")[1]
+          echo "{PORT_NAME}={ $port_name}" >> $GITHUB_ENV
           
       - name: install vcpkg package
         run: |
-          vcpkg install opengl --overlay-ports="./ports"
+          vcpkg install ${{env.PORT_NAME}} --overlay-ports="./ports"
           
       - name: export vcpkg package as nuget
-        run: vcpkg export opengl --nuget
+        run: vcpkg export ${{env.PORT_NAME}} --nuget
         
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
