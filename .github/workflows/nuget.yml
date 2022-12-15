@@ -29,4 +29,11 @@ jobs:
       - name: install vcpkg package
         run: |
           vcpkg install opengl --overlay-ports="./ports"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: OpenglPackage
+          path: |
+            Packages/Opengl
+            
      
