@@ -8,6 +8,9 @@ on:
 # getting port in linux
 # git diff HEAD~1 --name-only | xargs dirname | sed 's/Ports[/]//'
 
+#$port_name = $port_name.split("/")[1]
+#echo "{PORT_NAME}={ $port_name}" >> $GITHUB_ENV
+
 jobs:
   build:
     runs-on: windows-2019
@@ -19,9 +22,8 @@ jobs:
         
       - name: get vcpkg port name
         run: |
-          $port_name = git diff ${{github.event.before}} ${{github.event.after}} --name-only
-          $port_name = $port_name.split("/")[1]
-          echo "{PORT_NAME}={ $port_name}" >> $GITHUB_ENV
+          git diff ${{github.event.before}} ${{github.event.after}} --name-only
+          
           
       - name: install vcpkg package
         run: |
