@@ -10,6 +10,9 @@ jobs:
     runs-on: windows-2019
     env:
       VCPKG_ROOT: 'C:/vcpkg'
+      EVENT_CONTEXT: ${{ toJSON(github.event) }}
+      run: |
+        echo $EVENT_CONTEXT
 
     steps:
       - uses: actions/checkout@v3
