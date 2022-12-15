@@ -28,6 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: install vcpkg package
         run: |
+          where vcpkg
           vcpkg install opengl --overlay-ports="./ports"
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
