@@ -5,22 +5,24 @@ on:
   - 'Ports/utils/**'
  workflow_dispatch:
 
+# git diff HEAD~1 --name-only | xargs dirname | sed 's/Ports[/]//'
+
 jobs:
   build:
     runs-on: windows-2019
     env:
       VCPKG_ROOT: 'C:/vcpkg'
+      PORT_NAME: ''
     steps:
-    
-      - name: Printing Event
-        env:
-          EVENT_CONTEXT: ${{ toJSON(github.event) }}
-        run: |
-          echo $EVENT_CONTEXT
-      
       - name: Checkout repo
         uses: actions/checkout@v3
-
+        
+      - name: get vcpkg port name
+        id: port-name
+        run: |
+          ${{env.PORT_NAME}}=git diff HEAD~1 --name-only | xargs dirname | sed 's/Ports[/]//' \
+          echo ${{env.PORT_NAME}}
+          
       - name: install vcpkg package
         run: |
           vcpkg install opengl --overlay-ports="./ports"
