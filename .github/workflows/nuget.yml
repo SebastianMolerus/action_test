@@ -2,7 +2,7 @@ name: creating nuget
 on:
  push:
   paths:
-  - '${{github.workspace}}/Ports/utils/**'
+  - './Ports/utils/**'
  workflow_dispatch:
 
 jobs:
