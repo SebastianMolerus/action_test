@@ -28,5 +28,5 @@ jobs:
       # Runs a single command using the runners shell
       - name: install vcpkg package
         run: |
-          vcpkg install opengl --overlay_ports="./ports"
+          vcpkg install opengl --overlay-ports="./ports"
      
