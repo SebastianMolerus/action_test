@@ -1,11 +1,9 @@
 name: creating nuget
 on:
-
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+ push:
+  paths:
+  - 'ports/utils/*'
+ workflow_dispatch:
 
 jobs:
   build:
