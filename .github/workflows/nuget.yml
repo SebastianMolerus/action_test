@@ -29,9 +29,9 @@ jobs:
         run: |
           $port_name = git diff ${{github.event.before}} ${{github.event.after}} --name-only
           $port_name = $port_name.split("/")[1]
-          echo $port_name
           echo "PORT_NAME=$port_name" >> $GITHUB_OUTPUT
-
+          echo $port_name
+          
       - name: install vcpkg package
         run: |
           echo ${{steps.port-getter.outputs.PORT_NAME}}
