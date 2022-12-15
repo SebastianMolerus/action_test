@@ -27,7 +27,8 @@ jobs:
           $port_name = git diff ${{github.event.before}} ${{github.event.after}} --name-only
           $port_name = $port_name.split("/")[1]
           echo $port_name
-          echo "PORT_NAME=$port_name" >> $GITHUB_ENV
+          echo PORT_NAME=$port_name >> $GITHUB_ENV
+          echo ${{env.PORT_NAME}}
           
       - name: install vcpkg package
         run: |
