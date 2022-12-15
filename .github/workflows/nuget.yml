@@ -20,11 +20,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-         fetch-depth: '0'
+         fetch-depth: '2'
         
       - name: get vcpkg port name
         run: |
-          git diff ${{github.event.before}} ${{github.event.after}} --name-only
+          $port_name = git diff ${{github.event.before}} ${{github.event.after}} --name-only
+          $port_name = $port_name.split("/")
+          echo "{PORT_NAME}={ $port_name}" >> $GITHUB_ENV
           
       - name: install vcpkg package
         run: |
