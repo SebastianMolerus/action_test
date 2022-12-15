@@ -17,8 +17,9 @@ jobs:
           EVENT_CONTEXT: ${{ toJSON(github.event) }}
         run: |
           echo $EVENT_CONTEXT
-          
-      #- uses: actions/checkout@v3
+      
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
       - name: install vcpkg package
         run: |
