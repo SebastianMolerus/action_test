@@ -19,8 +19,7 @@ jobs:
       - name: get vcpkg port name
         id: port-name
         run: |
-          $port_name=git diff HEAD~1 --name-only | xargs dirname | sed 's/Ports[/]//' \
-          echo $port_name
+          git diff HEAD~1 --name-only | xargs dirname | sed 's/Ports[/]//'
           
       - name: install vcpkg package
         run: |
