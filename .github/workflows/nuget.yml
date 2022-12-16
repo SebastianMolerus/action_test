@@ -3,15 +3,9 @@ on:
  push:
   paths:
   - 'Ports/opengl/**'
- workflow_dispatch:
 
 # getting port in linux
 # git diff HEAD~1 --name-only | xargs dirname | sed 's/Ports[/]//'
-
-#$port_name = $port_name.split("/")[1]
-#echo "{PORT_NAME}={ $port_name}" >> $GITHUB_ENV
-
-#echo "action_state=yellow" >> $GITHUB_ENV
 
 jobs:
   build:
@@ -33,8 +27,7 @@ jobs:
           echo $port_name
           
       - name: install vcpkg package
-        run: |
-          vcpkg install ${{steps.port-getter.outputs.PORT_NAME}} --overlay-ports="./ports"
+        run: vcpkg install ${{steps.port-getter.outputs.PORT_NAME}} --overlay-ports="./ports"
           
       - name: export vcpkg package as nuget
         run: vcpkg export ${{steps.port-getter.outputs.PORT_NAME}} --nuget
@@ -42,5 +35,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: OpenglPackage
+          name: ${{steps.port-getter.outputs.PORT_NAME}}_nuget_pkg
           path: ${{env.VCPKG_ROOT}}\*.nupkg
