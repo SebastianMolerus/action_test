@@ -21,6 +21,7 @@ jobs:
       - name: get vcpkg port name
         id: port-getter
         run: |
+          git checkout main
           $port_name = git diff HEAD~1 --name-only
           $port_name = $port_name.split("/")[1]
           echo "PORT_NAME=$port_name" >> $env:GITHUB_OUTPUT
