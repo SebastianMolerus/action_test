@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-2019
     env:
       VCPKG_ROOT: 'C:/vcpkg'
+      ARCH: 'x64-windows'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -21,14 +22,13 @@ jobs:
       - name: get vcpkg port name
         id: port-getter
         run: |
-          git checkout main
           $port_name = git diff HEAD~1 --name-only
           $port_name = $port_name.split("/")[1]
           echo "PORT_NAME=$port_name" >> $env:GITHUB_OUTPUT
           echo $port_name
           
       - name: install vcpkg package
-        run: vcpkg install ${{steps.port-getter.outputs.PORT_NAME}} --overlay-ports="./ports"
+        run: vcpkg install ${{steps.port-getter.outputs.PORT_NAME}}:${{env.ARCH}} --overlay-ports="./ports"
           
       - name: export vcpkg package as nuget
         run: vcpkg export ${{steps.port-getter.outputs.PORT_NAME}} --nuget
@@ -36,5 +36,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{steps.port-getter.outputs.PORT_NAME}}_nuget_pkg
+          name: ${{steps.port-getter.outputs.PORT_NAME}}_${{env.ARCH}}_nuget
           path: ${{env.VCPKG_ROOT}}\*.nupkg
