@@ -5,6 +5,7 @@ on:
   - 'Ports/opengl/**'
   branches:
   - main
+ workflow_dispatch:
 
 jobs:
   build:
