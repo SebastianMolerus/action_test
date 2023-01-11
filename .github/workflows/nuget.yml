@@ -37,5 +37,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{steps.port-getter.outputs.PORT_NAME}}_${{env.ARCH}}_nuget
-          path: ${{env.INSTALL_DIR}}\package\*.nupkg
+          name: ${{steps.port-getter.outputs.PORT_NAME}}_${{env.ARCH}}.nupkg
+          path: ${{env.VCPKG_ROOT}}\*.nupkg
