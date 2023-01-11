@@ -13,6 +13,7 @@ jobs:
     env:
       VCPKG_ROOT: 'C:/vcpkg'
       ARCH: 'x64-windows'
+      INSTALL_DIR: '${{github.workspace}}\out\install'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -37,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{steps.port-getter.outputs.PORT_NAME}}_${{env.ARCH}}_nuget
-          path: ${{env.VCPKG_ROOT}}\*.nupkg
+          path: ${{env.INSTALL_DIR}}\package\*.nupkg
