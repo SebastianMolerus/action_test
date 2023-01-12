@@ -44,4 +44,4 @@ jobs:
       - name: push nuget
         run: |
          nuget sources Add -Name "github" -Source "https://nuget.pkg.github.com/SebastianMolerus/index.json" -UserName SebastianMolerus -Password password
-         nuget push ${{github.workspace}}\*.nupkg -Source "github" -ApiKey "${secrets.NUGET_TOKEN}}" -SkipDuplicate
+         nuget push ${{github.workspace}}\*.nupkg -Source "github" -ApiKey "${{secrets.NUGET_TOKEN}}" -SkipDuplicate
