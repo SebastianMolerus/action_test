@@ -13,7 +13,6 @@ jobs:
     env:
       VCPKG_ROOT: 'C:/vcpkg'
       ARCH: 'x64-windows'
-      INSTALL_DIR: '${{github.workspace}}\out\install'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -34,11 +33,15 @@ jobs:
       - name: export vcpkg package as nuget
         run: |
          vcpkg export ${{steps.port-getter.outputs.PORT_NAME}}:${{env.ARCH}} --nuget
-         nuget sources Add -Name "github" -Source "https://nuget.pkg.github.com/SebastianMolerus/index.json" -UserName SebastianMolerus -Password password
-         nuget push ${{env.VCPKG_ROOT}}/*.nupkg -Source "github" -ApiKey "${secrets.NUGET_TOKEN}}" -SkipDuplicate
+         Move-Item -Path ${{env.VCPKG_ROOT}}\*.nupkg -Destination ${{github.workspace}}
             
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{steps.port-getter.outputs.PORT_NAME}}_${{env.ARCH}}.nupkg
           path: ${{env.VCPKG_ROOT}}\*.nupkg
+          
+      - name: push nuget
+        run: |
+         nuget sources Add -Name "github" -Source "https://nuget.pkg.github.com/SebastianMolerus/index.json" -UserName SebastianMolerus -Password password
+         nuget push ${{github.workspace}}/*.nupkg -Source "github" -ApiKey "${secrets.NUGET_TOKEN}}" -SkipDuplicate
