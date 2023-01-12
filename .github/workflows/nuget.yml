@@ -43,4 +43,4 @@ jobs:
       - name: Upload nuget
         run: |
          nuget sources Add -Name "github" -Source "https://nuget.pkg.github.com/SebastianMolerus/index.json" -UserName SebastianMolerus -Password password
-         nuget push ${{env.VCPKG_ROOT}}\*.nupkg -Source "github" -ApiKey "${secrets.nuget_token}}" -SkipDuplicate
+         nuget push ${{env.VCPKG_ROOT}}\*.nupkg -Source "github" -ApiKey "${secrets.NUGET_TOKEN}}" -SkipDuplicate
