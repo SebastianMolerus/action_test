@@ -32,13 +32,11 @@ jobs:
         run: vcpkg install ${{steps.port-getter.outputs.PORT_NAME}}:${{env.ARCH}} --overlay-ports="./ports"
           
       - name: export vcpkg package as nuget
-        run: vcpkg export ${{steps.port-getter.outputs.PORT_NAME}}:${{env.ARCH}} --nuget
-        
-      - name: Upload nuget
         run: |
+         vcpkg export ${{steps.port-getter.outputs.PORT_NAME}}:${{env.ARCH}} --nuget
          nuget sources Add -Name "github" -Source "https://nuget.pkg.github.com/SebastianMolerus/index.json" -UserName SebastianMolerus -Password password
          nuget push ${{env.VCPKG_ROOT}}/*.nupkg -Source "github" -ApiKey "${secrets.NUGET_TOKEN}}" -SkipDuplicate
-         
+            
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
