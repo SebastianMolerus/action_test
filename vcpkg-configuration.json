@@ -1,0 +1,7 @@
+{
+	"default-registry": {
+		"kind": "git",
+		"repository": "https://github.com/SebastianMolerus/ports_registry",
+		"baseline": "ce4e8ebe445981bb5a6ebc99a7c583219e8f92e9"
+	}
+}
