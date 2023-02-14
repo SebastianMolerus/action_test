@@ -3,6 +3,6 @@
   "name": "my-application",
   "version": "0.0.2",
   "dependencies": [
-    "utils"
+    "utils" , "opengl"
   ]
 }
